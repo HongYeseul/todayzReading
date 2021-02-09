@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
         height: 40,
         width: 300,
         marginTop: 10,
+        justifyContent: 'center',
     },
     inputID: {
         height:40,
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
         width: 100,
         marginLeft: 10,
         marginTop: 17, 
-        textAlign:'center',
+        justifyContent: 'center',
     },
     title:{
         fontSize: 30,

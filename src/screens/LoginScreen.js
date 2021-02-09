@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import {StyleSheet} from 'react-native';
 import { login } from '../api/mock';
 import { setToken } from '../api/token';
-import EmailForm from '../forms/EmailForm';
+import LoginForm from '../forms/LoginForm';
 import { Button } from 'react-native-paper';
 
 const LoginScreen = ({navigation}) => {
     return (
-        <EmailForm
+        <LoginForm
             onSubmit={login}
             onAuthentication={()=> navigation.navigate('Home')}
         >
@@ -16,7 +16,7 @@ const LoginScreen = ({navigation}) => {
                 onPress={()=> navigation.navigate('CreateAccount')}
                 mode='outlined'
             >회원가입</Button> 
-        </EmailForm>
+        </LoginForm>
     );
 }
 
@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
         height: 40,
         width: 300,
         marginTop: 20,
+        justifyContent: 'center',
     },
 });
 

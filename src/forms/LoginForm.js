@@ -3,13 +3,13 @@ import { ScrollView, StyleSheet, Text } from 'react-native';
 import { setToken } from '../api/token';
 import { TextInput, Title, Button } from 'react-native-paper';
 
-const EmailForm = ({ buttonText, onSubmit, children, onAuthentication }) => {
-    const [email, onChangeEmail] = useState('');
+const LoginForm = ({ buttonText, onSubmit, children, onAuthentication }) => {
+    const [id, onChangeEmail] = useState('');
     const [password, onChangePassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
     const submit = () => {
-        onSubmit(email, password)
+        onSubmit(id, password)
         .then(async (res) => {
             await setToken(res.auth_token);
             onAuthentication();
@@ -23,15 +23,14 @@ const EmailForm = ({ buttonText, onSubmit, children, onAuthentication }) => {
             <TextInput
                 style={styles.input}
                 mode='outlined'
-                label='Email'
+                label='아이디'
                 onChangeText={(text) => onChangeEmail(text)}
-                value={email}
-                keyboardType="email-address"
+                value={id}
             />
             <TextInput
                 style={styles.input}
                 mode='outlined'
-                label="Password"
+                label="비밀번호"
                 onChangeText={(text) => onChangePassword(text)}
                 value={password}
                 secureTextEntry
@@ -40,7 +39,7 @@ const EmailForm = ({ buttonText, onSubmit, children, onAuthentication }) => {
                 style={styles.input}
                 onPress={submit}
                 mode='contained'
-            >{buttonText}</Button> 
+            >로그인</Button> 
             {errorMessage ? <Text>{errorMessage}</Text> : null}
             {children}
         </ScrollView>
@@ -56,8 +55,7 @@ const styles = StyleSheet.create({
     input: {
         height: 40,
         width: 300,
-        // borderColor: 'gray',
-        // borderWidth: 1,
+        justifyContent: 'center',
         marginTop: 20,
     },
     title:{
@@ -65,4 +63,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default EmailForm;
+export default LoginForm;

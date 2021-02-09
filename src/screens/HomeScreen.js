@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, Button} from 'react-native';
 import { getUsers } from '../api/mock';
 import { setToken } from '../api/token';
+import MainPage from './MainPage';
 
 export default class HomeScreen extends React.Component{
 
@@ -53,13 +54,13 @@ export default class HomeScreen extends React.Component{
 
     render(){
         return (
-            <View style = {{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                <Text>HomeScreen</Text>
-                {
+            <View style = {{flex: 1, alignItems: 'center', }}>
+                {/* {
                     this.state.users.map((user)=>(
                         <Text key={user.email}>{user.email}</Text>
                     ))
-                }
+                } */}
+                <MainPage></MainPage>
                 <Button title="Log out" onPress={this.logOut}/>
             </View>
         );
