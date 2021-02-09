@@ -1,0 +1,36 @@
+import React, { useState } from 'react';
+import {StyleSheet} from 'react-native';
+import { login } from '../api/mock';
+import { setToken } from '../api/token';
+import EmailForm from '../forms/EmailForm';
+import { Button } from 'react-native-paper';
+
+const LoginScreen = ({navigation}) => {
+    return (
+        <EmailForm
+            onSubmit={login}
+            onAuthentication={()=> navigation.navigate('Home')}
+        >
+            <Button 
+                style={styles.loginBtn}
+                onPress={()=> navigation.navigate('CreateAccount')}
+                mode='outlined'
+            >회원가입</Button> 
+        </EmailForm>
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    loginBtn: {
+        height: 40,
+        width: 300,
+        marginTop: 20,
+    },
+});
+
+export default LoginScreen;
