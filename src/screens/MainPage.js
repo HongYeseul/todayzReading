@@ -41,12 +41,12 @@ const MainPage = () => {
             <BookList></BookList>
         </ScrollView>
 
-        <FAB
+        {/* <FAB
             style={styles.fab}
             // small
             icon="plus"
-            onPress={() => console.log('Pressed')}
-        />
+            onPress={() => navigation.navigate('Login')}
+        /> */}
         </>
     );
     };

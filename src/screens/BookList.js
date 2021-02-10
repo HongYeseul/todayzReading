@@ -1,20 +1,31 @@
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Title, Searchbar, FAB, Surface, Text, Button, Caption, Subheading } from 'react-native-paper';
+import { withNavigation } from 'react-navigation';
+import StarRating from 'react-native-star-rating';
 
-const BookList = () => {
+const BookList = ( { navigation } ) => {
+    const [starCount, setStarCount] = React.useState(5);
 
     return (
         <>
+        <TouchableOpacity onPress={() => navigation.navigate('상세페이지', {location : navigation.state.routeName})}>
         <Surface style={styles.container}>
             <Surface style={styles.bookImg}></Surface>
             <View style={styles.content}>
                 <Title>Title</Title>
                 <Caption>Author</Caption>
-                <Text>★★★★★</Text>
+                <StarRating
+                    disabled={true}
+                    maxStars={5}
+                    rating={starCount}
+                    starSize={10}
+                    containerStyle={{width:55}}
+                />
                 <Caption>This is my favorite book ...</Caption>
             </View>
         </Surface>
+        </TouchableOpacity>
         </>
     );
     };
@@ -46,4 +57,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default BookList;
+export default withNavigation(BookList);

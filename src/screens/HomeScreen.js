@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, Text, Button} from 'react-native';
+import {View, Text, Button, StyleSheet} from 'react-native';
+import {FAB} from 'react-native-paper';
 import { getUsers } from '../api/mock';
 import { setToken } from '../api/token';
 import MainPage from './MainPage';
@@ -61,8 +62,23 @@ export default class HomeScreen extends React.Component{
                     ))
                 } */}
                 <MainPage></MainPage>
+                <FAB
+                    style={styles.fab}
+                    // small
+                    icon="plus"
+                    onPress={() => this.props.navigation.navigate('AddBook')}
+                />
                 <Button title="Log out" onPress={this.logOut}/>
             </View>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    fab: {
+        position: 'absolute',
+        margin: 30,
+        right: 0,
+        bottom: 0,
+    },
+});
