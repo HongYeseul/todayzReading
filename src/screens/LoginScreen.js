@@ -9,11 +9,11 @@ const LoginScreen = ({navigation}) => {
     return (
         <LoginForm
             onSubmit={login}
-            onAuthentication={()=> navigation.navigate('Home')}
+            onAuthentication={()=> navigation.navigate('오늘의독서')}
         >
             <Button 
                 style={styles.loginBtn}
-                onPress={()=> navigation.navigate('CreateAccount')}
+                onPress={()=> navigation.navigate('회원가입')}
                 mode='outlined'
             >회원가입</Button> 
         </LoginForm>

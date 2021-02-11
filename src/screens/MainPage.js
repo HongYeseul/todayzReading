@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Title, Searchbar, FAB, Surface, Button } from 'react-native-paper';
+import { Avatar, Title, Searchbar, FAB, Surface, Button } from 'react-native-paper';
 import BookList from './BookList';
 
 const MainPage = () => {
     const [searchQuery, setSearchQuery] = React.useState('');
     const onChangeSearch = query => setSearchQuery(query);
+    const [bookNum, setBookNum] = React.useState(0);
 
     return (
         <>
@@ -13,12 +14,11 @@ const MainPage = () => {
             <Surface style={styles.surface}>
                 <View style={styles.makeRow}>
                     <Title>내가 읽은 책 </Title>
-                    <Title style={styles.bookNum}>100 권</Title>
+                    <Title style={styles.bookNum}>{bookNum} 권</Title>
                 </View>
             </Surface>
 
-            <Surface style={styles.userFace}>
-            </Surface>
+            <Avatar.Image style={styles.userFace} source={require('../img/user.png')} />
         </View>
 
         <View style={styles.makeRow}>
@@ -45,7 +45,7 @@ const MainPage = () => {
             style={styles.fab}
             // small
             icon="plus"
-            onPress={() => navigation.navigate('Login')}
+            onPress={() => navigation.navigate('로그인')}
         /> */}
         </>
     );
@@ -71,9 +71,10 @@ const styles = StyleSheet.create({
         width: 80,
         alignItems: 'center',
         justifyContent: 'center',
-        elevation: 4,
+        // elevation: 4,
         borderRadius:50,
         margin:10,
+        backgroundColor:'#ededed',
     },
     bookNum:{
         fontSize: 30,

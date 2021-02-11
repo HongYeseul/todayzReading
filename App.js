@@ -9,30 +9,15 @@ import DetailBook from "./src/screens/DetailBook";
 
 const AppNavigator = createStackNavigator(
   {
-    // Home: {
-    //   screen: HomeScreen, // <----
-    // },
-    // Login: {
-    //   screen: LoginScreen, // <----
-    // },
-    // CreateAccount: {
-    //   screen: CreateAccountScreen, // <----
-    // },
-    // AddBook: {
-    //   screen: AddBook, // <----
-    // },
-    // BookList: {
-    //   screen: BookList, // <----
-    // },
-    Home: HomeScreen,
-    Login : LoginScreen,
-    CreateAccount : CreateAccountScreen,
-    AddBook : AddBook,
+    오늘의독서: HomeScreen,
+    로그인 : LoginScreen,
+    회원가입 : CreateAccountScreen,
+    책추가하기 : AddBook,
     BookList : BookList,
     상세페이지 : DetailBook
   },
   {
-    initialRouteName : 'Home',
+    initialRouteName : '오늘의독서',
   },
 );
 

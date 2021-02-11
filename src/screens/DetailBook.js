@@ -10,6 +10,9 @@ const BookList = ( {navigation} ) => {
     const [title, setTitle] = React.useState('Title');
     const [author, setAuthor] = React.useState('Author');
     const previousScreen = navigation.getParam("location");
+    const [modifyBtn, setModifyBtn] = React.useState(true);
+    const [confirmBtn, setConfirmBtn] = React.useState(false);
+    const [deleteBtn, setDeleteBtn] = React.useState(false);
 
     return (
         <>
@@ -30,10 +33,10 @@ const BookList = ( {navigation} ) => {
                 />
             </View>
             {
-                previousScreen == 'Home'
+                previousScreen == '오늘의독서'
                 ? <TextInput
                     style={styles.TxtBox}
-                    disabled={true}
+                    disabled={modifyBtn}
                     mode="outlined"
                     value={text}
                     multiline={true}
@@ -53,15 +56,33 @@ const BookList = ( {navigation} ) => {
             }
         </Surface>
         </View>
-        <Button mode="contained" onPress={() => console.log('Pressed')}>
-            수정
-        </Button>
-        <Button mode="contained" onPress={() => console.log('Pressed')}>
-            확인
-        </Button>
-        <Button mode="contained" onPress={() => console.log('Pressed')}>
-            삭제
-        </Button>
+
+        <View style={styles.btnContainer}>
+            {
+                previousScreen == '오늘의독서'
+                ? <><Button style={styles.Btn} mode="contained" onPress={() => setModifyBtn(false)}>
+                    수정
+                </Button>
+                <Button style={styles.Btn} mode="contained" onPress={() => console.log('Pressed')}>
+                    삭제
+                </Button>
+                {
+                    modifyBtn == false
+                    ? <Button style={styles.Btn} mode="contained" onPress={() => console.log('Pressed')}>
+                        확인
+                    </Button>
+                    : <></>
+                }
+                </>
+                : <>
+                <Button style={styles.Btn} mode="contained" onPress={() => console.log('Pressed')}>
+                    확인
+                </Button>
+                </>
+            }
+            
+            
+        </View>
         </ScrollView>
         </>
     );
@@ -94,6 +115,15 @@ const styles = StyleSheet.create({
     TxtBox:{
         height: 350,
         width: 320,
+    },
+    btnContainer:{
+        flexDirection:"row",
+        justifyContent: 'flex-end',
+        marginRight:30,
+    },
+    Btn:{
+        width:40,
+        margin:5
     },
 
 });

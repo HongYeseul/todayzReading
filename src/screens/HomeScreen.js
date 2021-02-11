@@ -23,7 +23,7 @@ export default class HomeScreen extends React.Component{
 
     handleUserLoadingError = (res) => {
         if(res.error === 401){
-            this.props.navigation.navigate('Login');
+            this.props.navigation.navigate('로그인');
         }else {
             this.setState({
                 hasLoadedUsers:false,
@@ -50,7 +50,7 @@ export default class HomeScreen extends React.Component{
     logOut = async () => {
         this.setState({ hasLoadedUsers : false, users:[]})
         await setToken('');
-        this.props.navigation.navigate('Login');
+        this.props.navigation.navigate('로그인');
     }
 
     render(){
@@ -66,7 +66,7 @@ export default class HomeScreen extends React.Component{
                     style={styles.fab}
                     // small
                     icon="plus"
-                    onPress={() => this.props.navigation.navigate('AddBook')}
+                    onPress={() => this.props.navigation.navigate('책추가하기')}
                 />
                 <Button title="Log out" onPress={this.logOut}/>
             </View>

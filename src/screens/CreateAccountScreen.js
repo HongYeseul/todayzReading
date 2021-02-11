@@ -12,7 +12,7 @@ const CreateAccountScreen = ({navigation}) => {
         createAccount('test@test.ca', 'password')
             .then( async (res) => {
                 await setToken(res.auth_token);
-                navigation.navigate('Home');
+                navigation.navigate('오늘의독서');
             })
             .catch((err)=> setErrorMassage(err.message));
     }
@@ -21,7 +21,7 @@ const CreateAccountScreen = ({navigation}) => {
         <SignUp
             buttonText="로그인 하러가기"
             onSubmit={createAccount}
-            onAuthentication={()=> navigation.navigate('Home')}
+            onAuthentication={()=> navigation.navigate('오늘의독서')}
         >
         </SignUp>
     );
