@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text } from 'react-native';
-import { setToken } from '../api/token';
+import { setToken, setIdToken } from '../api/token';
 import { TextInput, Title, Button } from 'react-native-paper';
+import { useDispatch } from 'react-redux';
 
 const LoginForm = ({ buttonText, onSubmit, children, onAuthentication }) => {
     const [id, onChangeEmail] = useState('');
     const [password, onChangePassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-
+    const dispatch = useDispatch();
+    
     // 로그인
-    const submit = () => {
+    const submit = (props) => {
         fetch('http://localhost:8000/users/login', {
             method : 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -23,6 +25,7 @@ const LoginForm = ({ buttonText, onSubmit, children, onAuthentication }) => {
             console.log("data : ", success);
             if(success == 1){
                 await setToken('login');
+                await setIdToken(id);
                 onAuthentication();
             }else console.log("로그인 실패")
         })

@@ -2,11 +2,37 @@ import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Avatar, Title, Searchbar, FAB, Surface, Button } from 'react-native-paper';
 import BookList from './BookList';
+import { getIdToken, setIdToken } from '../api/token';
+import { useEffect } from 'react';
 
 const MainPage = () => {
     const [searchQuery, setSearchQuery] = React.useState('');
     const onChangeSearch = query => setSearchQuery(query);
     const [bookNum, setBookNum] = React.useState(0);
+    let [loading, loadingModify] = React.useState({
+        isLoading : true,
+        books : []
+    });
+
+    let getBooks = async () => {
+        if(loading.isLoading == true){
+            fetch('http://localhost:8000/'+ await getIdToken(), {
+                method : 'GET',
+                headers: { 'Content-Type': 'application/json' },
+            }).then(response => response.json() )
+            .then(async books =>{
+                console.log(books);
+                setBookNum(books.length);
+                loadingModify({books, isLoading:false})
+            })
+            .catch((err) => {
+                console.error(err);
+            })
+        }
+    }
+    useEffect(()=>{
+        getBooks();
+    });
 
     return (
         <>
@@ -36,9 +62,24 @@ const MainPage = () => {
         </View>
         
         <ScrollView>
-            <BookList></BookList>
-            <BookList></BookList>
-            <BookList></BookList>
+            {
+                loading.isLoading
+                ? <Text>Loading ...</Text>
+                : (
+                    loading.books.map((book, idx) => {
+                        return(
+                            <BookList
+                                id = {idx}
+                                title = {book.title}
+                                authors = {book.authors}
+                                publisher = {book.publisher}
+                                grade = {book.grade}
+                                review = {book.review}
+                            />
+                        )
+                    })
+                )
+            }
         </ScrollView>
 
         {/* <FAB

@@ -4,7 +4,7 @@ import { Title, Searchbar, FAB, Surface, Text, Button, Caption, Subheading } fro
 import { withNavigation } from 'react-navigation';
 import StarRating from 'react-native-star-rating';
 
-const BookList = ( { navigation } ) => {
+const BookList = ( { navigation, title, authors, publisher, grade, review } ) => {
     const [starCount, setStarCount] = React.useState(5);
 
     return (
@@ -13,16 +13,16 @@ const BookList = ( { navigation } ) => {
         <Surface style={styles.container}>
             <Surface style={styles.bookImg}></Surface>
             <View style={styles.content}>
-                <Title>Title</Title>
-                <Caption>Author</Caption>
+                <Title>{title}</Title>
+                <Caption>{authors}</Caption>
                 <StarRating
                     disabled={true}
-                    maxStars={5}
+                    maxStars={grade}
                     rating={starCount}
                     starSize={10}
                     containerStyle={{width:55}}
                 />
-                <Caption>This is my favorite book ...</Caption>
+                <Caption>{review}</Caption>
             </View>
         </Surface>
         </TouchableOpacity>
