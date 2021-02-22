@@ -37,7 +37,7 @@ const getAuthenticationToken = () => 'successful_fake_token';
 export const getUsers = async (shouldSucceed = true)=> {
     const token = await getToken();
 
-    if(token !== 'successful_fake_token'){
+    if(token !== 'login'){
         return mockFailure({error: 401, message:'Invalid Request'});
     }
 

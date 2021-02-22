@@ -8,13 +8,33 @@ const LoginForm = ({ buttonText, onSubmit, children, onAuthentication }) => {
     const [password, onChangePassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
+    // 로그인
     const submit = () => {
-        onSubmit(id, password)
-        .then(async (res) => {
-            await setToken(res.auth_token);
-            onAuthentication();
+        fetch('http://localhost:8000/users/login', {
+            method : 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body : JSON.stringify({
+                id : id,
+                pw : password
+            })
+        }).then(response => response.json() )
+        .then(async data =>{
+            let success = data.success;
+            console.log("data : ", success);
+            if(success == 1){
+                await setToken('login');
+                onAuthentication();
+            }else console.log("로그인 실패")
         })
-        .catch((res) => setErrorMessage(res.error));
+        .catch((err) => {
+            console.error(err);
+        })
+        // onSubmit(id, password)
+        // .then(async (res) => {
+        //     await setToken(res.auth_token);
+        //     onAuthentication();
+        // })
+        // .catch((res) => setErrorMessage(res.error));
     };
 
     return (
