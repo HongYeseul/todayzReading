@@ -30,6 +30,26 @@ const MainPage = () => {
             })
         }
     }
+
+    let getSearchBooks = async () => {
+        fetch('http://localhost:8000/book/search/user/'+ await getIdToken(), {
+            method : 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body : JSON.stringify({
+                title : searchQuery
+            })
+        }).then(response => response.json() )
+        .then(async books =>{
+            console.log(books);
+            console.log("THIS IS book");
+            console.log(loading.books)
+            loadingModify({books})
+        })
+        .catch((err) => {
+            console.error(err);
+        })
+    }
+
     useEffect(()=>{
         getBooks();
     });
@@ -58,6 +78,9 @@ const MainPage = () => {
             <Button 
                 style={styles.searchBtn}
                 mode='contained'
+                onPress={()=> {
+                    getSearchBooks();
+                }}
             >검색</Button> 
         </View>
         
