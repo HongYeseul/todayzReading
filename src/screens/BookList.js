@@ -1,17 +1,29 @@
 import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Title, Searchbar, FAB, Surface, Text, Button, Caption, Subheading } from 'react-native-paper';
+import { Title, Searchbar, FAB, Surface, Text, Button, Caption, Subheading, Card } from 'react-native-paper';
 import { withNavigation } from 'react-navigation';
 import StarRating from 'react-native-star-rating';
 
-const BookList = ( { navigation, title, authors, publisher, grade, review } ) => {
+const BookList = ( { navigation, title, authors, publisher, grade, review, thumbnail } ) => {
     const [starCount, setStarCount] = React.useState(5);
 
     return (
         <>
-        <TouchableOpacity onPress={() => navigation.navigate('상세페이지', {location : navigation.state.routeName})}>
+        <TouchableOpacity onPress={() => 
+            navigation.navigate('상세페이지', 
+            {
+                location : navigation.state.routeName,
+                title : title,
+                authors : authors,
+                grade : grade,
+                review : review,
+                thumbnail : thumbnail
+            })}>
         <Surface style={styles.container}>
-            <Surface style={styles.bookImg}></Surface>
+            <Card>
+                <Card.Cover style={styles.bookImg} source={{ uri: thumbnail }} />
+            </Card>
+            {/* <Surface style={styles.bookImg}>ls</Surface> */}
             <View style={styles.content}>
                 <Title>{title}</Title>
                 <Caption>{authors}</Caption>
@@ -43,10 +55,8 @@ const styles = StyleSheet.create({
         flexDirection:'row',
     },
     bookImg:{
-        padding: 8,
         height: 120,
         width: 100,
-        alignItems: 'center',
         justifyContent: 'center',
         elevation: 2,
     },

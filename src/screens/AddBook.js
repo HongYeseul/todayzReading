@@ -78,8 +78,8 @@ const AddBook = ({navigation}) => {
                                 title = {book.title}
                                 authors = {book.authors}
                                 publisher = {book.publisher}
-                                grade = {book.grade}
-                                review = {book.review}
+                                grade = {0}
+                                thumbnail = {book.thumbnail}
                             />
                         )
                     })
