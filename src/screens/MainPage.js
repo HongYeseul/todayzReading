@@ -21,7 +21,6 @@ const MainPage = () => {
                 headers: { 'Content-Type': 'application/json' },
             }).then(response => response.json() )
             .then(async books =>{
-                console.log(books);
                 setBookNum(books.length);
                 loadingModify({books, isLoading:false})
             })
@@ -40,9 +39,6 @@ const MainPage = () => {
             })
         }).then(response => response.json() )
         .then(async books =>{
-            console.log(books);
-            console.log("THIS IS book");
-            console.log(loading.books)
             loadingModify({books})
         })
         .catch((err) => {
@@ -98,6 +94,7 @@ const MainPage = () => {
                                 publisher = {book.publisher}
                                 grade = {book.grade}
                                 review = {book.review}
+                                thumbnail = {book.thumbnail}
                             />
                         )
                     })

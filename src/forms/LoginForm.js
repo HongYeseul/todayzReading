@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text } from 'react-native';
 import { setToken, setIdToken } from '../api/token';
 import { TextInput, Title, Button } from 'react-native-paper';
-import { useDispatch } from 'react-redux';
 
 const LoginForm = ({ buttonText, onSubmit, children, onAuthentication }) => {
     const [id, onChangeEmail] = useState('');
     const [password, onChangePassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const dispatch = useDispatch();
     
     // 로그인
     const submit = (props) => {

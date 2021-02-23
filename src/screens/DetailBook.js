@@ -3,16 +3,40 @@ import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Title, Colors, Searchbar, FAB, Surface, Text, Button, Caption, TextInput,Card } from 'react-native-paper';
 import { withNavigation } from 'react-navigation';
 import StarRating from 'react-native-star-rating';
+import { getIdToken } from '../api/token';
+import Toast from 'react-native-simple-toast';
 
 const BookList = ( {navigation} ) => {
     const [text, setText] = React.useState('');
-    const [starCount, setStarCount] = React.useState(3);
+    const [starCount, setStarCount] = React.useState(navigation.getParam("grade"));
     // const [title, setTitle] = React.useState('Title');
     // const [author, setAuthor] = React.useState('Author');
     const previousScreen = navigation.getParam("location");
     const [modifyBtn, setModifyBtn] = React.useState(true);
     const [confirmBtn, setConfirmBtn] = React.useState(false);
     const [deleteBtn, setDeleteBtn] = React.useState(false);
+
+    let addBookToDB = async () => {
+        let userId = await getIdToken();
+        fetch('http://localhost:8000/book/review/' + userId, {
+            method : 'POST',
+            headers: { 'Accept':'application/json', 'Content-Type': 'application/json' },
+            body : JSON.stringify({
+                id : userId,
+                title : navigation.getParam("title"),
+                authors : navigation.getParam("authors"),
+                grade : starCount,
+                review : text,
+                thumbnail : navigation.getParam("thumbnail"),
+            })
+        }).then(response => response.json() )
+        .then(async data =>{
+            Toast.show('추가되었습니다.')
+        })
+        .catch((err) => {
+            console.error(err);
+        })
+    }
 
     return (
         <>
@@ -28,7 +52,7 @@ const BookList = ( {navigation} ) => {
                 <StarRating
                     disabled={false}
                     maxStars={5}
-                    rating={navigation.getParam("grade")}
+                    rating={starCount}
                     selectedStar={(rating) => setStarCount(rating)}
                     starSize={20}
                     containerStyle={{width:100, marginTop:30}}
@@ -77,7 +101,7 @@ const BookList = ( {navigation} ) => {
                 }
                 </>
                 : <>
-                <Button style={styles.Btn} mode="contained" onPress={() => console.log('Pressed')}>
+                <Button style={styles.Btn} mode="contained" onPress={addBookToDB}>
                     확인
                 </Button>
                 </>
