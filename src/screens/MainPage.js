@@ -5,7 +5,7 @@ import BookList from './BookList';
 import { getIdToken, setIdToken } from '../api/token';
 import { useEffect } from 'react';
 
-const MainPage = () => {
+const MainPage = () => { 
     const [searchQuery, setSearchQuery] = React.useState('');
     const onChangeSearch = query => setSearchQuery(query);
     const [bookNum, setBookNum] = React.useState(0);
