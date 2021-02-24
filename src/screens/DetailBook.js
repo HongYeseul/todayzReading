@@ -7,10 +7,10 @@ import { getIdToken } from '../api/token';
 import Toast from 'react-native-simple-toast';
 
 const BookList = ( {navigation} ) => {
-    const [text, setText] = React.useState('');
+    const [text, setText] = React.useState(navigation.getParam("review"));
     const [starCount, setStarCount] = React.useState(navigation.getParam("grade"));
-    // const [title, setTitle] = React.useState('Title');
-    // const [author, setAuthor] = React.useState('Author');
+    const [title, setTitle] = React.useState(navigation.getParam("title"));
+    const [author, setAuthor] = React.useState(navigation.getParam("authors"));
     const previousScreen = navigation.getParam("location");
     const [modifyBtn, setModifyBtn] = React.useState(true);
     const [confirmBtn, setConfirmBtn] = React.useState(false);
@@ -38,6 +38,24 @@ const BookList = ( {navigation} ) => {
         })
     }
 
+    let deleteBookToDB = async () => {
+        let userId = await getIdToken();
+        fetch('http://localhost:8000/book/review/' + userId, {
+            method : 'DELETE',
+            headers: { 'Accept':'application/json', 'Content-Type': 'application/json' },
+            body : JSON.stringify({
+                id : userId,
+                title : navigation.getParam("title"),
+            })
+        }).then(response => response.json() )
+        .then(async data =>{
+            Toast.show('삭제되었습니다.')
+        })
+        .catch((err) => {
+            console.error(err);
+        })
+    }
+
     return (
         <>
         <ScrollView>
@@ -47,8 +65,8 @@ const BookList = ( {navigation} ) => {
                 <Card.Cover style={styles.bookImg} source={{ uri: navigation.getParam("thumbnail") }} />
             </Card>
             <View style={styles.content}>
-                <Title style={{marginBottom:-3, fontSize:20}}>{navigation.getParam("title")}</Title>
-                <Caption style={{fontSize:15}}>{navigation.getParam("authors")}</Caption>
+                <Title style={{marginBottom:-3, fontSize:20}}>{title}</Title>
+                <Caption style={{fontSize:15}}>{author}</Caption>
                 <StarRating
                     disabled={false}
                     maxStars={5}
@@ -64,7 +82,7 @@ const BookList = ( {navigation} ) => {
                     style={styles.TxtBox}
                     disabled={modifyBtn}
                     mode="outlined"
-                    value={navigation.getParam("review")}
+                    value={text}
                     multiline={true}
                     onChangeText={text => setText(text)}
                     placeholder="내용을 입력하세요."
@@ -73,7 +91,7 @@ const BookList = ( {navigation} ) => {
                 : <TextInput
                     style={styles.TxtBox}
                     mode="outlined"
-                    value={navigation.getParam("review")}
+                    value={text}
                     multiline={true}
                     onChangeText={text => setText(text)}
                     placeholder="내용을 입력하세요."
@@ -89,7 +107,7 @@ const BookList = ( {navigation} ) => {
                 ? <><Button style={styles.Btn} mode="contained" onPress={() => setModifyBtn(false)}>
                     수정
                 </Button>
-                <Button style={styles.Btn} mode="contained" onPress={() => console.log('Pressed')}>
+                <Button style={styles.Btn} mode="contained" onPress={deleteBookToDB}>
                     삭제
                 </Button>
                 {

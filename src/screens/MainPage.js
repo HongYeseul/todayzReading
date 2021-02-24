@@ -4,6 +4,7 @@ import { Avatar, Title, Searchbar, FAB, Surface, Button } from 'react-native-pap
 import BookList from './BookList';
 import { getIdToken, setIdToken } from '../api/token';
 import { useEffect } from 'react';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const MainPage = () => { 
     const [searchQuery, setSearchQuery] = React.useState('');
@@ -28,6 +29,20 @@ const MainPage = () => {
                 console.error(err);
             })
         }
+    }
+
+    let reloadBooks = async () => {
+        fetch('http://localhost:8000/'+ await getIdToken(), {
+            method : 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        }).then(response => response.json() )
+        .then(async books =>{
+            setBookNum(books.length);
+            loadingModify({books})
+        })
+        .catch((err) => {
+            console.error(err);
+        })
     }
 
     let getSearchBooks = async () => {
@@ -78,6 +93,8 @@ const MainPage = () => {
                     getSearchBooks();
                 }}
             >검색</Button> 
+
+            <Icon name="refresh" style={styles.reloadBtn} size={20} color="#808080" onPress={reloadBooks}/>
         </View>
         
         <ScrollView>
@@ -143,14 +160,21 @@ const styles = StyleSheet.create({
     },
     searchBar:{
         height: 40,
-        width: 250,
-        margin:10,
+        width: 240,
+        margin:5,
     },
     searchBtn: {
         height: 40,
-        width: 80,
-        margin : 10,
+        width: 30,
+        margin : 5,
         justifyContent: 'center',
+    },
+    reloadBtn: {
+        height: 40,
+        paddingLeft:5,
+        paddingRight:5,
+        paddingTop : 15,
+        borderRadius: 40
     },
     fab: {
         position: 'absolute',
