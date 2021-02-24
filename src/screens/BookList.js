@@ -5,7 +5,7 @@ import { withNavigation } from 'react-navigation';
 import StarRating from 'react-native-star-rating';
 
 const BookList = ( { navigation, title, authors, publisher, grade, review, thumbnail } ) => {
-    const [starCount, setStarCount] = React.useState(5);
+    const [starCount, setStarCount] = React.useState(grade);
 
     return (
         <>
@@ -23,13 +23,13 @@ const BookList = ( { navigation, title, authors, publisher, grade, review, thumb
             <Card>
                 <Card.Cover style={styles.bookImg} source={{ uri: thumbnail }} />
             </Card>
-            {/* <Surface style={styles.bookImg}>ls</Surface> */}
+            
             <View style={styles.content}>
                 <Title>{title}</Title>
                 <Caption>{authors}</Caption>
                 <StarRating
                     disabled={true}
-                    maxStars={grade}
+                    maxStars={5}
                     rating={starCount}
                     starSize={10}
                     containerStyle={{width:55}}

@@ -56,6 +56,26 @@ const BookList = ( {navigation} ) => {
         })
     }
 
+    let modifyBookToDB = async () => {
+        let userId = await getIdToken();
+        fetch('http://localhost:8000/book/review/' + userId, {
+            method : 'PATCH',
+            headers: { 'Accept':'application/json', 'Content-Type': 'application/json' },
+            body : JSON.stringify({
+                title : title,
+                grade : starCount,
+                review : text,
+            })
+        }).then(response => response.json() )
+        .then(async data =>{
+            setModifyBtn(true);
+            Toast.show('수정되었습니다.')
+        })
+        .catch((err) => {
+            console.error(err);
+        })
+    }
+
     return (
         <>
         <ScrollView>
@@ -112,7 +132,7 @@ const BookList = ( {navigation} ) => {
                 </Button>
                 {
                     modifyBtn == false
-                    ? <Button style={styles.Btn} mode="contained" onPress={() => console.log('Pressed')}>
+                    ? <Button style={styles.Btn} mode="contained" onPress={modifyBookToDB}>
                         확인
                     </Button>
                     : <></>
@@ -135,7 +155,7 @@ const BookList = ( {navigation} ) => {
 const styles = StyleSheet.create({
     container: {
         padding: 13,
-        height: 510,
+        height: 535,
         width: 360,
         justifyContent: 'center',
         elevation: 1,
