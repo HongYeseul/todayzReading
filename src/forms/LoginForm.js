@@ -84,4 +84,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default LoginForm;
+export default withNavigation(LoginForm);

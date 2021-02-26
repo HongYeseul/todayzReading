@@ -2,23 +2,63 @@ import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { setToken } from '../api/token';
 import { TextInput, Title, Button } from 'react-native-paper';
+import Toast from 'react-native-simple-toast';
 
-const SignUp = ({ onSubmit, children, onAuthentication }) => {
+const SignUp = ({ onSubmit, navigation }) => {
     const [id, onChangeId] = useState('');
     const [password, onChangePassword] = useState('');
     const [name, onChangeName] = useState('');
     const [passwordChk, onChangePasswordChk] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    let chk = 1;
 
     const submit = () => {
-        onSubmit(id, password)
-        // password 동일한지 확인 하는 메소드 추가
-        .then(async (res) => {
-            await setToken(res.auth_token);
-            onAuthentication();
-        })
-        .catch((res) => setErrorMessage(res.error));
+        if(chk == 0){
+            Toast.show('아이디 중복 확인을 진행 해 주세요.');
+            return;
+        }
+        if(password == passwordChk){
+            fetch('http://localhost:8000/users/signUp/' + id, {
+                method : 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body : JSON.stringify({
+                    pw : password,
+                    name : name
+                })
+            }).then(response => response.text() )
+            .then(async data =>{
+                onChangeId('');
+                onChangePassword('');
+                onChangeName('');
+                onChangePasswordChk('');
+                chk=1;
+                Toast.show('회원가입이 되었습니다.');
+            })
+            .catch((err) => {
+                console.error(err);
+            })
+        }else{
+            Toast.show('비밀번호가 일치하지 않습니다.');
+        }
     };
+
+    let confirmID = () => {
+        fetch('http://localhost:8000/users/signUp/' + id, {
+            method : 'GET',
+            headers: { 'Accept':'application/json', 'Content-Type': 'application/json' },
+        }).then(response => response.json() )
+        .then(async data =>{
+            if(data[0].chk == 0){
+                chk = 0;
+                Toast.show('사용 가능한 아이디입니다.');
+            }
+            else
+                Toast.show('사용 불가능한 아이디입니다.')
+        })
+        .catch((err) => {
+            console.error(err);
+        })
+    }
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
@@ -33,7 +73,7 @@ const SignUp = ({ onSubmit, children, onAuthentication }) => {
                 />
                 <Button 
                     style={styles.inputBtnChk}
-                    onPress={submit}
+                    onPress={confirmID}
                     mode='contained'
                 >중복확인</Button>
             </View>
@@ -65,8 +105,6 @@ const SignUp = ({ onSubmit, children, onAuthentication }) => {
                 onPress={submit}
                 mode='contained'
             >확인</Button> 
-            {errorMessage ? <Text>{errorMessage}</Text> : null}
-            {children}
         </ScrollView>
     );
     };
