@@ -5,13 +5,15 @@
 
 해당 레포지토리는 어플을 만든 레포지토리이며, 서버를 위한 레포지토리는 [이곳](https://github.com/HongYeseul/todayzReading-server)에서 확인이 가능합니다.
 
+> 해당 어플은 아이디어가 좋아서 앱을 만들기보다는 평소에 개발할 때 해보지 못했던 경험을 위해 기획하였으니 참고하셨으면 좋겠습니다.
+
 ## 세부 동작 이미지
 ![login](./img/login.png)
 ![login](./img/BookSearchAdd.png)
 ![login](./img/MainPage_Modify.png)
 
 ## 개발 일정
-![login](./img/Calender.png)
+![login](./img/calender.png)
 
 ## 사용 기술
 - React Native
