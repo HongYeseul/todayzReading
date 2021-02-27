@@ -11,11 +11,11 @@
 
 ## 세부 동작 이미지
 ![login](./img/login.png)
-![login](./img/BookSearchAdd.png)
-![login](./img/MainPage_Modify.png)
+![BookSearchAdd](./img/BookSearchAdd.png)
+![MainPage_Modify](./img/MainPage_Modify.png)
 
 ## 개발 일정
-![login](./img/calender.png)
+![calender](./img/calender.png)
 
 ## 사용 기술
 - React Native
