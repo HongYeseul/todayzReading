@@ -19,7 +19,7 @@
 
 ## 사용 기술
 - React Native
-- Node.js
+- Node.js [(해당 레포지토리 둘러보기)](https://github.com/HongYeseul/todayzReading-server)
 - MySql
 - Oracle Cloud
 - Kakao 검색 API
